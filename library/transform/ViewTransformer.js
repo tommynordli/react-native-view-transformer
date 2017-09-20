@@ -21,7 +21,7 @@ export default class ViewTransformer extends React.Component {
     super(props);
     this.state = {
       //transform state
-      scale: 1,
+      scale: this.props.initialScale,
       translateX: 0,
       translateY: 0,
 
@@ -88,10 +88,7 @@ export default class ViewTransformer extends React.Component {
       onResponderGrant: this.onResponderGrant.bind(this),
       onResponderRelease: this.onResponderRelease.bind(this),
       onResponderTerminate: this.onResponderRelease.bind(this),
-      onResponderTerminationRequest: (evt, gestureState) => false, //Do not allow parent view to intercept gesture
-      onResponderSingleTapConfirmed: (evt, gestureState) => {
-        this.props.onSingleTapConfirmed && this.props.onSingleTapConfirmed();
-      }
+      onResponderTerminationRequest: (evt, gestureState) => false //Do not allow parent view to intercept gesture
     });
   }
 
@@ -244,11 +241,6 @@ export default class ViewTransformer extends React.Component {
     }
   }
 
-
-
-
-
-
   performFling(vx, vy) {
     let startX = 0;
     let startY = 0;
@@ -376,7 +368,7 @@ export default class ViewTransformer extends React.Component {
 
   animateBounce() {
     let curScale = this.state.scale;
-    let minScale = 1;
+    let minScale = this.props.minScale;
     let maxScale = this.props.maxScale;
     let scaleBy = 1;
     if (curScale > maxScale) {
@@ -439,6 +431,8 @@ ViewTransformer.propTypes = {
   maxOverScrollDistance: React.PropTypes.number,
 
   maxScale: React.PropTypes.number,
+  minScale: React.PropTypes.number,
+  initialScale: React.PropTypes.number,
   contentAspectRatio: React.PropTypes.number,
 
   /**
@@ -448,9 +442,7 @@ ViewTransformer.propTypes = {
 
   onViewTransformed: React.PropTypes.func,
 
-  onTransformGestureReleased: React.PropTypes.func,
-
-  onSingleTapConfirmed: React.PropTypes.func
+  onTransformGestureReleased: React.PropTypes.func
 };
 ViewTransformer.defaultProps = {
   maxOverScrollDistance: 20,
@@ -458,5 +450,7 @@ ViewTransformer.defaultProps = {
   enableTranslate: true,
   enableTransform: true,
   maxScale: 1,
+  initialScale: 1,
+  minScale: 1,
   enableResistance: false
 };
