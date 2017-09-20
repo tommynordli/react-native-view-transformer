@@ -4,7 +4,8 @@
 
 ![](Demo/demo.gif)
 
-
+## About this fork
+I want images to be scaled up to take up the full view, so I need to be able to set defaultScale and minScale.
 
 ## Install
 
