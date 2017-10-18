@@ -92,6 +92,17 @@ export default class ViewTransformer extends React.Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.initialScale !== nextProps.initialScale) {
+      this.updateTransform({
+        translateX: 0,
+        translateY: 0,
+        scale: nextProps.initialScale
+      });
+    }
+  }
+
+
   componentDidUpdate(prevProps, prevState) {
     this.props.onViewTransformed && this.props.onViewTransformed({
       scale: this.state.scale,
